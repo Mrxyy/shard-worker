@@ -1,0 +1,16 @@
+var squareNumber = document.querySelector("#number3");
+
+var result2 = document.querySelector(".result2");
+
+if (!!window.SharedWorker) {
+  var myWorker = new SharedWorker("worker.js");
+
+  squareNumber.onchange = function () {
+    myWorker.port.postMessage([squareNumber.value, squareNumber.value]);
+  };
+
+  myWorker.port.onmessage = function (e) {
+    result2.textContent = e.data;
+    console.log("收到信息：", e.data);
+  };
+}
